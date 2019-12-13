@@ -5,7 +5,7 @@ public:
     {
         this->name = name;
     }
-    double evaluate();
+    int evaluate();
 private:
     string name;
 };

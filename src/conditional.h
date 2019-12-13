@@ -6,7 +6,7 @@ public:
     {
         this->condition = condition;
     }
-    double evaluate()
+    int evaluate()
     {    
         return condition->evaluate() ? left->evaluate() : right->evaluate();
     }

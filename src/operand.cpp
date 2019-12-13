@@ -15,7 +15,7 @@ using namespace std;
 Expression* Operand::parse()
 {
     char paren;
-    double value;
+    int value;
 
     cin >> ws;
     if (isdigit(cin.peek()))

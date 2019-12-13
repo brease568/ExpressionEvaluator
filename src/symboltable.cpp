@@ -5,13 +5,13 @@ using namespace std;
 #include "symboltable.h"
 
 
-void SymbolTable::insert(string variable, double value)
+void SymbolTable::insert(string variable, int value)
 {
     const Symbol& symbol = Symbol(variable, value);
     elements.push_back(symbol);
 }
 
-double SymbolTable::lookUp(string variable) const
+int SymbolTable::lookUp(string variable) const
 {
     for (int i = 0; i < elements.size(); i++)
         if (elements[i].variable == variable)

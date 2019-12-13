@@ -32,7 +32,7 @@ void parseAssignments()
 {
     char assignop, delimiter;
     string variable;
-    double value;
+    int value;
     do
     {
         variable = parseName();

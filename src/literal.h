@@ -5,7 +5,7 @@ public:
     {
         this->value = value;
     }
-    double evaluate()
+    int evaluate()
     {
         return value;
     }

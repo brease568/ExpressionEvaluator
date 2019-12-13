@@ -1,5 +1,5 @@
 class Expression
 {
 public: 
-    virtual double evaluate() = 0;
+    virtual int evaluate() = 0;
 };
