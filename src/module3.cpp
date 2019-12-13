@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 #include "expression.h"
@@ -10,7 +12,7 @@ using namespace std;
 
 SymbolTable symbolTable;
 
-void parseAssignments();
+void parseAssignments(istringstream& myStringStream);
 
 int main()
 {
@@ -18,25 +20,45 @@ int main()
     Expression* expression;
     char paren, comma;
 
-    //This is where I will edit to read from a file.
-    cout << "Enter expression: ";
-    cin >> paren;
-    expression = SubExpression::parse();
-    cin >> comma;
-    parseAssignments();
-    cout << "Value = " << expression->evaluate() << endl;
+    //Read expressions in from a file:
+    cout << "\nAttempting to read from file: 'expressions.txt'" << endl;
+
+    ifstream inFile("expressions.txt");
+    if(!inFile)
+    {
+	cout << "Could not find the file: 'expressions.txt'" << endl;
+	return -1;
+    }
+
+    string fileLine;
+    while(getline(inFile, fileLine))
+    {
+	if(fileLine.empty()) { continue; }
+	//Clear the symbolTable to not interfere with multiple expressions in a file
+	symbolTable.clear();
+	istringstream myStringStream(fileLine);
+	cout << fileLine << endl;
+	myStringStream >> paren;
+	expression = SubExpression::parse(myStringStream);
+	myStringStream >> comma;
+	parseAssignments(myStringStream);
+	cout << "Value = " << expression->evaluate() << endl;
+	cout << "" << endl;
+    }
+    cout << "Done reading file." << endl;
+    inFile.close();
     return 0;
 }
 
-void parseAssignments()
+void parseAssignments(istringstream& myStringStream)
 {
     char assignop, delimiter;
     string variable;
     int value;
     do
     {
-        variable = parseName();
-        cin >> ws >> assignop >> value >> delimiter;
+        variable = parseName(myStringStream);
+        myStringStream >> ws >> assignop >> value >> delimiter;
         symbolTable.insert(variable, value);
     }
     while (delimiter == ',');

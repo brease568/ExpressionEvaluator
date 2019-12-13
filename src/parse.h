@@ -1,1 +1,1 @@
-string parseName();
+string parseName(istringstream& myStringStream);

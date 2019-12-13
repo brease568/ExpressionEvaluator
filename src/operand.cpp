@@ -1,5 +1,5 @@
 #include <cctype>
-#include <iostream>
+#include <sstream>
 #include <list>
 #include <string>
 
@@ -12,24 +12,24 @@ using namespace std;
 #include "literal.h"
 #include "parse.h"
 
-Expression* Operand::parse()
+Expression* Operand::parse(istringstream& myStringStream)
 {
     char paren;
     int value;
 
-    cin >> ws;
-    if (isdigit(cin.peek()))
+    myStringStream >> ws;
+    if (isdigit(myStringStream.peek()))
     {
-        cin >> value;
+        myStringStream >> value;
         Expression* literal = new Literal(value);
         return literal;
     }
-    if (cin.peek() == '(')
+    if (myStringStream.peek() == '(')
     {
-        cin >> paren;
-        return SubExpression::parse();
+        myStringStream >> paren;
+        return SubExpression::parse(myStringStream);
     }
     else
-        return new Variable(parseName());
+        return new Variable(parseName(myStringStream));
     return 0;
 }

@@ -1,19 +1,19 @@
 #include <cctype> 
-#include <iostream> 
+#include <sstream> 
 #include <string> 
 using namespace std;
 
 #include "parse.h"
 
-string parseName()
+string parseName(istringstream& myStringStream)
 {
     char alnum;
     string name = "";
 
-    cin >> ws;
-    while (isalnum(cin.peek()))
+    myStringStream >> ws;
+    while (isalnum(myStringStream.peek()))
     {
-        cin >> alnum;
+        myStringStream >> alnum;
         name += alnum;
     }
     return name;

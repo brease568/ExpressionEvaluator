@@ -1,4 +1,4 @@
-#include <iostream>
+#include <sstream>
 using namespace std;
 
 #include "expression.h"
@@ -22,37 +22,37 @@ SubExpression::SubExpression(Expression* left, Expression* right)
     this->right = right;
 }
 
-Expression* SubExpression::parse()
+Expression* SubExpression::parse(istringstream& myStringStream)
 {
     Expression* left;
     Expression* right;
     Expression* condition; //Added for conditional operator
     char operation, paren, question;
     
-    left = Operand::parse();
-    cin >> operation;
+    left = Operand::parse(myStringStream);
+    myStringStream >> operation;
 
     //First 'if' evaluates if the expression is a conditional expression
     if(operation == ':')
     {
 	//The third operand represents the condition in the grammar
-	right = Operand::parse();
-	cin >> question;
-	condition = Operand::parse();
-	cin >> paren;
+	right = Operand::parse(myStringStream);
+	myStringStream >> question;
+	condition = Operand::parse(myStringStream);
+	myStringStream >> paren;
 	return new Conditional(left, right, condition);
     }
     //Second 'if' evaluates if the expression is a negation expression
     else if(operation == '!')
     {
-	cin >> paren;
+	myStringStream >> paren;
 	return new Negation(left, NULL); //This expression should only contain one operand
     }
     //Else the expression is one of the following switch case expressions
     else
     {
-    	right = Operand::parse();
-    	cin >> paren;
+    	right = Operand::parse(myStringStream);
+    	myStringStream >> paren;
     	switch (operation)
     	{
             case '+':
